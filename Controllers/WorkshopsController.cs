@@ -15,7 +15,7 @@ namespace apiExercise.Controllers
             {
                 Id = index,
                 Status = "Scheduled",
-                Name = "Anything really"
+                Name = "Taller bases"
             }).ToList();
 
         private readonly ILogger<WorkshopsController> _logger;
@@ -55,8 +55,8 @@ namespace apiExercise.Controllers
             return workshops;
         }
 
-        [HttpPatch("{id}")]
-        public Workshop CancelWorkshop(int id, [FromBody]string status)
+        [HttpPatch("{id}/change-status")]
+        public Workshop ChangeWorkshopStatus(int id, [FromBody]string status)
         {
             int foundWorkshopIndex = workshops.FindIndex(workshop => workshop.Id == id);
             workshops[foundWorkshopIndex].Status = status;
