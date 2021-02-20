@@ -14,8 +14,8 @@ namespace apiExercise.Controllers
         private static List<Workshop> workshops = Enumerable.Range(1, 5).Select(index => new Workshop
             {
                 Id = index,
-                Status = "Postponed",
-                Name = "Wander"
+                Status = "Scheduled",
+                Name = "Anything really"
             }).ToList();
 
         private readonly ILogger<WorkshopsController> _logger;
@@ -37,5 +37,14 @@ namespace apiExercise.Controllers
             workshops.RemoveAll(workshop => workshop.Id == id);
             return workshops;
         }
+
+        [HttpPost]
+        public IEnumerable<Workshop> CreateWorkshop(Workshop workshop)
+        {
+            workshop.Id = workshops.Count + 1;
+            workshops.Add(workshop);
+            return workshops;
+        }
+
     }
 }
