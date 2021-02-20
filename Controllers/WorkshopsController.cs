@@ -46,5 +46,13 @@ namespace apiExercise.Controllers
             return workshops;
         }
 
+        [HttpPut("{id}")]
+        public IEnumerable<Workshop> updateWorkshop(int id, Workshop workshop)
+        {
+            int foundWorkshopIndex = workshops.FindIndex(workshop => workshop.Id == id);
+            workshop.Id = id;
+            workshops[foundWorkshopIndex] = workshop;
+            return workshops;
+        }
     }
 }
