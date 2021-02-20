@@ -11,10 +11,12 @@ namespace apiExercise.Controllers
     [Route("api/[controller]")]
     public class WorkshopsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private static List<Workshop> workshops = Enumerable.Range(1, 5).Select(index => new Workshop
+            {
+                Id = index,
+                Status = "Postponed",
+                Name = "Wander"
+            }).ToList();
 
         private readonly ILogger<WorkshopsController> _logger;
 
@@ -24,16 +26,16 @@ namespace apiExercise.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Workshop> Get()
+        public IEnumerable<Workshop> GetWorkshops()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Workshop
-            {
-                Id = index,
-                Status = "Postponed",
-                Name = "Something"
-            })
-            .ToArray();
+            return workshops;
+        }
+
+        [HttpDelete("{id}")]
+        public IEnumerable<Workshop> DeleteWorkshops(int id)
+        {
+            workshops.RemoveAll(workshop => workshop.Id == id);
+            return workshops;
         }
     }
 }
